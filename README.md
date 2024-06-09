@@ -16,6 +16,7 @@
 - There will be no e2e tests, because I was short on time, if I would need to add them, I would use Playwright or Cypress.
 - There is no Code Splitting because app is small, but it's totally required in bigger apps.
 - It would be also great to add dependabot.
+- Since the app is so simple, we don't really need a router.
 
 ## Tods
 
@@ -24,3 +25,4 @@
 - Add `lint` step to CI
 - Add `build` command
 - Deploy app somewhere (probably GitHub Page)
+- Add loading simulation
