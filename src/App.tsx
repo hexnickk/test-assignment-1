@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { countriesData } from "./countries";
+import { cn } from "./utils";
 
 type ArrayElement<SubType extends readonly unknown[]> =
   SubType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -33,16 +34,22 @@ const QuestionView = ({ question, onAnswer }: QuestionViewProps) => {
     onAnswer?.(question, option);
   };
 
+  let isAnswered = question.givenAnswer != null;
+
   return (
     <>
-      <h1>{question.question}</h1>
-      <div>Given answer: {question.givenAnswer}</div>
-      <div className="flex flex-wrap gap-2">
+      <h1 className="text-primary">{question.question}</h1>
+      <div className="flex w-full flex-wrap gap-5">
         {question.options.map((option) => (
           <button
             key={option}
-            className="p-2 basis-1/3 grow bg-red-500"
+            className={cn(
+              "p-4 rounded-lg basis-1/3 grow bg-[#393F6E] text-primary from-active-start to-active-end",
+              !isAnswered && "hover:bg-gradient-to-r",
+              question.givenAnswer === option && "bg-gradient-to-r",
+            )}
             onClick={handleAnswer(option)}
+            disabled={isAnswered}
           >
             {option}
           </button>
@@ -67,15 +74,20 @@ const QuizPage = ({ questions, onAnswer }: QuizPageProps) => {
   };
 
   return (
-    <>
-      <h3>Country Quiz</h3>
+    <div className="pt-5 flex flex-col items-center gap-5">
+      <h3 className="text-[#8B8EAB]">Country Quiz</h3>
       <div className="flex gap-2">
         {Array(QUIZ_LENGTH)
           .fill(undefined)
           .map((_, index) => (
             <button
               key={index}
-              className="px-3 py-1 rounded-full bg-blue-500"
+              className={cn(
+                "h-10 w-10 rounded-full from-active-start to-active-end text-white",
+                (index === questionId ||
+                  questions[index]?.givenAnswer != null) &&
+                  "bg-gradient-to-r",
+              )}
               onClick={handleTabClick(index)}
             >
               {index + 1}
@@ -83,7 +95,7 @@ const QuizPage = ({ questions, onAnswer }: QuizPageProps) => {
           ))}
       </div>
       <QuestionView question={questions[questionId]} onAnswer={onAnswer} />
-    </>
+    </div>
   );
 };
 
@@ -163,7 +175,7 @@ export function App() {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="h-[600px] w-[600px] bg-green-500 flex flex-col items-center p-5 gap-5">
+      <div className="h-[600px] w-[600px] bg-secondary flex flex-col items-center px-5">
         {isQuizEnded ? (
           <ResultsPage
             correct={correct}
