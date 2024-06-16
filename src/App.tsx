@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { countriesData } from "./countries";
 
 type ArrayElement<SubType extends readonly unknown[]> =
@@ -30,7 +30,7 @@ const QuestionView = ({ question, onAnswer }: QuestionViewProps) => {
   }
 
   const handleAnswer = (option: string) => () => {
-    onAnswer(question, option);
+    onAnswer?.(question, option);
   };
 
   return (
@@ -54,13 +54,60 @@ const QuestionView = ({ question, onAnswer }: QuestionViewProps) => {
 
 const QUIZ_LENGTH = 10;
 
-export function App() {
-  let [questions, setQuestions] = useState<Question[]>([]);
+type QuizPageProps = {
+  questions?: Question[];
+  onAnswer?: QuestionViewProps["onAnswer"];
+};
+
+const QuizPage = ({ questions, onAnswer }: QuizPageProps) => {
   let [questionId, setQuestionId] = useState<number>(0);
 
-  useEffect(() => {
-    // Kinda fetch it
-    let questions: Question[] = shuffle(countriesData)
+  let handleTabClick = (questionId: number) => () => {
+    setQuestionId(questionId);
+  };
+
+  return (
+    <>
+      <h3>Country Quiz</h3>
+      <div className="flex gap-2">
+        {Array(QUIZ_LENGTH)
+          .fill(undefined)
+          .map((_, index) => (
+            <button
+              key={index}
+              className="px-3 py-1 rounded-full bg-blue-500"
+              onClick={handleTabClick(index)}
+            >
+              {index + 1}
+            </button>
+          ))}
+      </div>
+      <QuestionView question={questions[questionId]} onAnswer={onAnswer} />
+    </>
+  );
+};
+
+type ResultsPageProps = {
+  correct?: number;
+  length?: number;
+  onRestart?: () => unknown;
+};
+
+const ResultsPage = ({ correct, length, onRestart }: ResultsPageProps) => {
+  return (
+    <>
+      <h3>Congrats! You completed the quiz.</h3>
+      <div>
+        You answer {correct}/{length} correctly
+      </div>
+      <button onClick={onRestart}>Play again</button>
+    </>
+  );
+};
+
+let fetchQuestions = async (): Promise<Question[]> => {
+  return (
+    shuffle(countriesData)
       // group by 4
       .reduce<ContryData[][]>((acc, cur, index) => {
         if (index % 4 === 0) {
@@ -80,14 +127,19 @@ export function App() {
         ]),
         correctAnswer: item[0].countryName,
         givenAnswer: undefined,
-      }));
+      }))
+  );
+};
 
-    setQuestions(questions);
+export function App() {
+  let [questions, setQuestions] = useState<Question[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      let questions = await fetchQuestions();
+      setQuestions(questions);
+    })();
   }, []);
-
-  let handleTabClick = (questionId: number) => () => {
-    setQuestionId(questionId);
-  };
 
   let handleAnswer = (question: Question, option: string) => {
     const newQuestions = questions.map((item) =>
@@ -96,27 +148,31 @@ export function App() {
     setQuestions(newQuestions);
   };
 
+  let handleRestart = async () => {
+    let questions = await fetchQuestions();
+    setQuestions(questions);
+  };
+
+  let length = questions.filter((item) => item.givenAnswer != null).length;
+
+  let isQuizEnded = length === QUIZ_LENGTH;
+
+  let correct = questions.filter(
+    (item) => item.givenAnswer === item.correctAnswer,
+  ).length;
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="h-[600px] w-[600px] bg-green-500 flex flex-col items-center p-5 gap-5">
-        <h3>Country Quiz</h3>
-        <div className="flex gap-2">
-          {Array(QUIZ_LENGTH)
-            .fill(undefined)
-            .map((_, index) => (
-              <button
-                key={index}
-                className="px-3 py-1 rounded-full bg-blue-500"
-                onClick={handleTabClick(index)}
-              >
-                {index + 1}
-              </button>
-            ))}
-        </div>
-        <QuestionView
-          question={questions[questionId]}
-          onAnswer={handleAnswer}
-        />
+        {isQuizEnded ? (
+          <ResultsPage
+            correct={correct}
+            length={length}
+            onRestart={handleRestart}
+          />
+        ) : (
+          <QuizPage questions={questions} onAnswer={handleAnswer} />
+        )}
       </div>
     </div>
   );
