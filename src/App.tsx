@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { countriesData } from "./countries";
-import { cn } from "./utils";
+import { QUIZ_LENGTH } from "./modules/config";
+import { ResultsPage } from "./pages/results.page";
+import { QuizPage } from "./pages/quiz.page";
 
 type ArrayElement<SubType extends readonly unknown[]> =
   SubType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -13,108 +15,11 @@ const shuffle = <T extends unknown>(array: T[]): T[] =>
     .sort((a, b) => a._sort - b._sort)
     .map(({ value }) => value);
 
-type Question = {
+export type Question = {
   question: string;
   options: string[];
   correctAnswer: string;
   givenAnswer: string | undefined;
-};
-
-type QuestionViewProps = {
-  question?: Question;
-  onAnswer?: (question: Question, option: string) => unknown;
-};
-
-const QuestionView = ({ question, onAnswer }: QuestionViewProps) => {
-  if (question == null) {
-    return <></>;
-  }
-
-  const handleAnswer = (option: string) => () => {
-    onAnswer?.(question, option);
-  };
-
-  let isAnswered = question.givenAnswer != null;
-
-  return (
-    <>
-      <h1 className="text-primary">{question.question}</h1>
-      <div className="flex w-full flex-wrap gap-5">
-        {question.options.map((option) => (
-          <button
-            key={option}
-            className={cn(
-              "p-4 rounded-lg basis-1/3 grow bg-[#393F6E] text-primary from-active-start to-active-end",
-              !isAnswered && "hover:bg-gradient-to-r",
-              question.givenAnswer === option && "bg-gradient-to-r",
-            )}
-            onClick={handleAnswer(option)}
-            disabled={isAnswered}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-    </>
-  );
-};
-
-const QUIZ_LENGTH = 10;
-
-type QuizPageProps = {
-  questions?: Question[];
-  onAnswer?: QuestionViewProps["onAnswer"];
-};
-
-const QuizPage = ({ questions, onAnswer }: QuizPageProps) => {
-  let [questionId, setQuestionId] = useState<number>(0);
-
-  let handleTabClick = (questionId: number) => () => {
-    setQuestionId(questionId);
-  };
-
-  return (
-    <div className="pt-5 flex flex-col items-center gap-5">
-      <h3 className="text-[#8B8EAB]">Country Quiz</h3>
-      <div className="flex gap-2">
-        {Array(QUIZ_LENGTH)
-          .fill(undefined)
-          .map((_, index) => (
-            <button
-              key={index}
-              className={cn(
-                "h-10 w-10 rounded-full from-active-start to-active-end text-white",
-                (index === questionId ||
-                  questions[index]?.givenAnswer != null) &&
-                  "bg-gradient-to-r",
-              )}
-              onClick={handleTabClick(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-      </div>
-      <QuestionView question={questions[questionId]} onAnswer={onAnswer} />
-    </div>
-  );
-};
-
-type ResultsPageProps = {
-  correct?: number;
-  length?: number;
-  onRestart?: () => unknown;
-};
-
-const ResultsPage = ({ correct, length, onRestart }: ResultsPageProps) => {
-  return (
-    <>
-      <h3>Congrats! You completed the quiz.</h3>
-      <div>
-        You answer {correct}/{length} correctly
-      </div>
-      <button onClick={onRestart}>Play again</button>
-    </>
-  );
 };
 
 let fetchQuestions = async (): Promise<Question[]> => {

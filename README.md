@@ -1,4 +1,6 @@
-# Test assignment 1
+# Test assignment
+
+Design and requiremnets -> https://devchallenges.io/challenge/country-quizz
 
 ## Development
 
