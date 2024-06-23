@@ -8,6 +8,9 @@ module.exports = {
         primary: "#E2E4F3",
         secondary: "#343964",
       },
+      backgroundImage: {
+        default: "url('/assets/bg.jpg')",
+      },
     },
   },
   variants: {},

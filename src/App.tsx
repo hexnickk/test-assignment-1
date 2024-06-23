@@ -79,8 +79,8 @@ export function App() {
   ).length;
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="h-[600px] w-[600px] bg-secondary flex flex-col items-center px-5">
+    <div className="flex min-h-screen items-center justify-center bg-default bg-cover bg-center text-primary">
+      <div className="flex w-[600px] flex-col items-center rounded-xl bg-secondary">
         {isQuizEnded ? (
           <ResultsPage
             correct={correct}
