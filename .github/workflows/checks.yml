@@ -14,7 +14,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-      - run: yarn install
+          cache: 'yarn'
+      - run: yarn install --immutable
 
   format:
     runs-on: ubuntu-latest
@@ -24,7 +25,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-      - run: yarn install
+          cache: 'yarn'
+      - run: yarn install --immutable
       - run: yarn format
   
   lint:
@@ -35,5 +37,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-      - run: yarn install
+          cache: 'yarn'
+      - run: yarn install --immutable
       - run: yarn lint
