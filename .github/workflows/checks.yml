@@ -7,15 +7,35 @@ on:
       - main
 
 jobs:
-  format:
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-
       - run: yarn install
 
+  format:
+    runs-on: ubuntu-latest
+    dependencies:
+      - prepare
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - run: yarn install
       - run: yarn format
+  
+  lint:
+    runs-on: ubuntu-latest
+    dependencies:
+      - prepare
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - run: yarn install
+      - run: yarn lint
