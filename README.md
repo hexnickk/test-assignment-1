@@ -1,6 +1,7 @@
 # Test assignment
 
 Design and requiremnets -> https://devchallenges.io/challenge/country-quizz
+Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
 
 ## Development
 
