@@ -7,6 +7,8 @@ on:
       - main
 
 jobs:
+  # the purpose of this job is to warm up the cache for yarn install
+  # so it should use cached version of packages across all jobs
   prepare:
     runs-on: ubuntu-latest
     steps:
