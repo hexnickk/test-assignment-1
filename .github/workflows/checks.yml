@@ -18,8 +18,7 @@ jobs:
 
   format:
     runs-on: ubuntu-latest
-    dependencies:
-      - prepare
+    needs: prepare
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -30,8 +29,7 @@ jobs:
   
   lint:
     runs-on: ubuntu-latest
-    dependencies:
-      - prepare
+    needs: prepare
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
