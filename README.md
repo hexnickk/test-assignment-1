@@ -2,6 +2,8 @@
 
 # Test assignment 1
 
+Spent time ~ 7 hours
+
 Design and requiremnets -> https://devchallenges.io/challenge/country-quizz
 
 Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
@@ -27,7 +29,3 @@ Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
 - There are no e2e tests, also due to time contraints, if I would add them, I would use Playwright or Cypress.
 - There is no Router and Code Splitting because this app is small, but it's totally required in bigger apps.
 - It would be also great to add dependabot.
-
-## Tods
-
-- Add loading simulation

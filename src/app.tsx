@@ -3,6 +3,7 @@ import { countriesData } from "./countries";
 import { QUIZ_LENGTH } from "./modules/config";
 import { ResultsPage } from "./pages/results.page";
 import { QuizPage } from "./pages/quiz.page";
+import { Loading } from "./shared/loading";
 
 type ArrayElement<SubType extends readonly unknown[]> =
   SubType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -23,6 +24,8 @@ export type Question = {
 };
 
 let fetchQuestions = async (): Promise<Question[]> => {
+  // mimic loading
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   return (
     shuffle(countriesData)
       // group by 4
@@ -70,9 +73,11 @@ export function App() {
     setQuestions(questions);
   };
 
-  let length = questions.filter((item) => item.givenAnswer != null).length;
+  let answeredQuestions = questions.filter(
+    (item) => item.givenAnswer != null,
+  ).length;
 
-  let isQuizEnded = length === QUIZ_LENGTH;
+  let isQuizEnded = answeredQuestions === QUIZ_LENGTH;
 
   let correct = questions.filter(
     (item) => item.givenAnswer === item.correctAnswer,
@@ -81,15 +86,15 @@ export function App() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-default bg-cover bg-center text-primary">
       <div className="flex w-[800px] flex-col items-center rounded-xl bg-secondary">
-        {isQuizEnded ? (
-          <ResultsPage
-            correct={correct}
-            length={length}
-            onRestart={handleRestart}
-          />
-        ) : (
-          <QuizPage questions={questions} onAnswer={handleAnswer} />
-        )}
+        {/* poor man's router */}
+        {(questions.length === 0 && <Loading className="m-10" />) ||
+          (isQuizEnded && (
+            <ResultsPage
+              correct={correct}
+              length={answeredQuestions}
+              onRestart={handleRestart}
+            />
+          )) || <QuizPage questions={questions} onAnswer={handleAnswer} />}
       </div>
     </div>
   );
