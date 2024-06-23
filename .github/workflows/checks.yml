@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: 'yarn'
+          cache: "yarn"
       - run: yarn install --frozen-lockfile
 
   format:
@@ -27,10 +27,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: 'yarn'
+          cache: "yarn"
       - run: yarn install --frozen-lockfile
       - run: yarn format
-  
+
   lint:
     runs-on: ubuntu-latest
     needs: prepare
@@ -39,6 +39,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: 'yarn'
+          cache: "yarn"
       - run: yarn install --frozen-lockfile
       - run: yarn lint
