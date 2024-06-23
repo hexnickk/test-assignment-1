@@ -80,7 +80,7 @@ export function App() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-default bg-cover bg-center text-primary">
-      <div className="flex w-[600px] flex-col items-center rounded-xl bg-secondary">
+      <div className="flex w-[800px] flex-col items-center rounded-xl bg-secondary">
         {isQuizEnded ? (
           <ResultsPage
             correct={correct}

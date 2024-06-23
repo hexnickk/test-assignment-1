@@ -22,13 +22,13 @@ export const QuestionView = ({ question, onAnswer }: QuestionViewProps) => {
 
   return (
     <>
-      <h1>{question.question}</h1>
+      <span className="text-xl font-bold">{question.question}</span>
       <div className="flex w-full flex-wrap gap-5">
         {question.options.map((option) => (
           <button
             key={option}
             className={cn(
-              "flex grow basis-1/3 items-center justify-center gap-2 rounded-lg bg-[#393F6E] from-active-start to-active-end p-4",
+              "flex grow basis-1/3 items-center justify-center gap-2 rounded-lg bg-[#393F6E] from-active-start to-active-end p-4 font-semibold",
               !isAnswered && "hover:bg-gradient-to-r",
               question.givenAnswer === option && "bg-gradient-to-r",
             )}

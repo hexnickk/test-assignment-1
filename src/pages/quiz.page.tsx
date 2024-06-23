@@ -17,7 +17,7 @@ export const QuizPage = ({ questions, onAnswer }: QuizPageProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 pt-5">
+    <div className="flex flex-col items-center gap-5 px-16 py-8">
       <h3 className="text-[#8B8EAB]">Country Quiz</h3>
       <div className="flex gap-2">
         {Array(QUIZ_LENGTH)
