@@ -1,3 +1,5 @@
+[![Checks](https://github.com/kozlovzxc/test-assignment-1/actions/workflows/checks.yml/badge.svg)](https://github.com/kozlovzxc/test-assignment-1/actions/workflows/checks.yml)
+
 # Test assignment 1
 
 Design and requiremnets -> https://devchallenges.io/challenge/country-quizz
