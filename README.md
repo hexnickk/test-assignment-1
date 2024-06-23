@@ -3,6 +3,7 @@
 # Test assignment 1
 
 Design and requiremnets -> https://devchallenges.io/challenge/country-quizz
+
 Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
 
 ## Development
@@ -29,6 +30,4 @@ Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
 
 ## Tods
 
-- Introduce `lint` step
-- Add `lint` step to CI
 - Add loading simulation
