@@ -29,3 +29,4 @@ Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
 - There are no e2e tests, also due to time constraints. If I were to add them, I would use Playwright or Cypress.
 - There is no router and code splitting because this app is small, but they are totally required in bigger apps.
 - It would also be great to add Dependabot.
+- No mobile layout support, just didn't have time to implement it.
