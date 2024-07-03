@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import { cn } from "src/utils";
+import { cn } from "./utils";
 
 let loadingIcon = new URL("/assets/loading.svg", import.meta.url);
 

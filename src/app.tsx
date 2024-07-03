@@ -4,17 +4,12 @@ import { QUIZ_LENGTH } from "./modules/config";
 import { ResultsPage } from "./pages/results.page";
 import { QuizPage } from "./pages/quiz.page";
 import { Loading } from "./shared/loading";
+import { shuffle } from "./shared/utils";
 
 type ArrayElement<SubType extends readonly unknown[]> =
   SubType extends readonly (infer ElementType)[] ? ElementType : never;
 
 type ContryData = ArrayElement<typeof countriesData>;
-
-const shuffle = <T extends unknown>(array: T[]): T[] =>
-  array
-    .map((value) => ({ value, _sort: Math.random() }))
-    .sort((a, b) => a._sort - b._sort)
-    .map(({ value }) => value);
 
 export type Question = {
   question: string;

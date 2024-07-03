@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Question } from "../app";
-import { cn } from "../utils";
+import { cn } from "../shared/utils";
 import { QuestionView, QuestionViewProps } from "../modules/step/question-view";
 import { QUIZ_LENGTH } from "../modules/config";
 
-type QuizPageProps = {
+export type QuizPageProps = {
   questions?: Question[];
   onAnswer?: QuestionViewProps["onAnswer"];
 };

@@ -24,8 +24,8 @@ Deployed version -> https://main--mellow-baklava-4f6eed.netlify.app/
 
 ## Things which are not implemented
 
-- There is no SSR, since this quiz doesn't really benefits from SSR, there would be a slight benefit from rendering speed, but it will complicate current setup.
-- There are no unit tests, due to time constraints, if I would add them, I would add Jest.
-- There are no e2e tests, also due to time contraints, if I would add them, I would use Playwright or Cypress.
-- There is no Router and Code Splitting because this app is small, but it's totally required in bigger apps.
-- It would be also great to add dependabot.
+- There is no SSR since this quiz doesn't really benefit from it. There would be a slight improvement in rendering speed, but it would complicate the current setup.
+- There are no unit tests due to time constraints. If I were to add them, I would use Jest.
+- There are no e2e tests, also due to time constraints. If I were to add them, I would use Playwright or Cypress.
+- There is no router and code splitting because this app is small, but they are totally required in bigger apps.
+- It would also be great to add Dependabot.

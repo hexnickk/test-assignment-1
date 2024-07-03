@@ -1,5 +1,5 @@
 import { Question } from "../../app";
-import { cn } from "../../utils";
+import { cn } from "../../shared/utils";
 
 export type QuestionViewProps = {
   question?: Question;
